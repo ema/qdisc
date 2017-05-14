@@ -58,7 +58,7 @@ type TC_Stats2 struct {
 }
 
 type QdiscInfo struct {
-    IfaceName  string
+	IfaceName  string
 	Parent     uint32
 	Handle     uint32
 	Kind       string
@@ -150,11 +150,11 @@ func parseMessage(msg netlink.Message) (QdiscInfo, error) {
 	   };
 	*/
 
-    if len(msg.Data) < 20 {
-        return m, fmt.Errorf("Short message, len=%d", len(msg.Data))
-    }
+	if len(msg.Data) < 20 {
+		return m, fmt.Errorf("Short message, len=%d", len(msg.Data))
+	}
 
-    ifaceIdx := nlenc.Uint32(msg.Data[4:8])
+	ifaceIdx := nlenc.Uint32(msg.Data[4:8])
 
 	m.Handle = nlenc.Uint32(msg.Data[8:12])
 	m.Parent = nlenc.Uint32(msg.Data[12:16])
@@ -194,25 +194,25 @@ func parseMessage(msg netlink.Message) (QdiscInfo, error) {
 		}
 	}
 
-    iface, err := net.InterfaceByIndex(int(ifaceIdx))
-    m.IfaceName = iface.Name
+	iface, err := net.InterfaceByIndex(int(ifaceIdx))
+	m.IfaceName = iface.Name
 
 	return m, err
 }
 
 func Get() ([]QdiscInfo, error) {
-    var res []QdiscInfo
+	var res []QdiscInfo
 	msgs, _ := getQdiscMsgs()
 
 	for _, msg := range msgs {
 		m, err := parseMessage(msg)
 
-        if err != nil {
-            return nil, err
-        }
+		if err != nil {
+			return nil, err
+		}
 
-        res = append(res, m)
+		res = append(res, m)
 	}
 
-    return res, nil
+	return res, nil
 }

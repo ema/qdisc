@@ -1,4 +1,5 @@
 build:
+	go fmt
 	go build
 	go vet
 	staticcheck
