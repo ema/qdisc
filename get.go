@@ -202,7 +202,11 @@ func parseMessage(msg netlink.Message) (QdiscInfo, error) {
 
 func Get() ([]QdiscInfo, error) {
 	var res []QdiscInfo
-	msgs, _ := getQdiscMsgs()
+	msgs, err := getQdiscMsgs()
+
+	if err != nil {
+		return nil, err
+	}
 
 	for _, msg := range msgs {
 		m, err := parseMessage(msg)
