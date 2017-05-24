@@ -75,15 +75,18 @@ func TestGetAndParseOK(t *testing.T) {
 
 	expect := []QdiscInfo{
 		{
-			IfaceName:  "lo",
-			Parent:     0,
-			Handle:     2147549184,
-			Kind:       "fq",
-			Bytes:      258943627,
-			Packets:    1985695,
-			Drops:      0,
-			Requeues:   22,
-			Overlimits: 0,
+			IfaceName:   "lo",
+			Parent:      0,
+			Handle:      2147549184,
+			Kind:        "fq",
+			Bytes:       258943627,
+			Packets:     1985695,
+			Drops:       0,
+			Requeues:    22,
+			Overlimits:  0,
+			GcFlows:     24957,
+			Throttled:   13515,
+			FlowsPlimit: 0,
 		},
 	}
 
