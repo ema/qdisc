@@ -157,7 +157,7 @@ func parseTC_Fq_Qd_Stats(attr netlink.Attribute) (TC_Fq_Qd_Stats, error) {
 func getQdiscMsgs(c *netlink.Conn) ([]netlink.Message, error) {
 	req := netlink.Message{
 		Header: netlink.Header{
-			Flags: netlink.HeaderFlagsRequest | netlink.HeaderFlagsDump,
+			Flags: netlink.Request | netlink.Dump,
 			Type:  38, // RTM_GETQDISC
 		},
 		Data: []byte{0},
