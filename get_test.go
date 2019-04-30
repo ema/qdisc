@@ -36,7 +36,7 @@ func TestGetAndParseShort(t *testing.T) {
 		t.Fatalf("msgs should be nil, got '%v' instead", msgs)
 	}
 
-	if err.Error() != "Short message, len=4" {
+	if err.Error() != "short message, len=4" {
 		t.Fatalf("expected short message error, got '%v' instead", err)
 	}
 }
