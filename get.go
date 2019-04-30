@@ -160,7 +160,7 @@ func getQdiscMsgs(c *netlink.Conn) ([]netlink.Message, error) {
 			Flags: netlink.HeaderFlagsRequest | netlink.HeaderFlagsDump,
 			Type:  38, // RTM_GETQDISC
 		},
-		Data: []byte{0},
+		Data: make([]byte, 20),
 	}
 
 	// Perform a request, receive replies, and validate the replies
