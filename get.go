@@ -192,7 +192,7 @@ func parseMessage(msg netlink.Message) (QdiscInfo, error) {
 	*/
 
 	if len(msg.Data) < 20 {
-		return m, fmt.Errorf("Short message, len=%d", len(msg.Data))
+		return m, fmt.Errorf("short message, len=%d", len(msg.Data))
 	}
 
 	ifaceIdx := nlenc.Uint32(msg.Data[4:8])
