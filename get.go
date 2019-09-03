@@ -19,7 +19,7 @@ const (
 	TCA_FCNT
 	TCA_STATS2
 	TCA_STAB
-	__TCA_MAX
+	// __TCA_MAX
 )
 
 const (
@@ -29,7 +29,7 @@ const (
 	TCA_STATS_QUEUE
 	TCA_STATS_APP
 	TCA_STATS_RATE_EST64
-	__TCA_STATS_MAX
+	// __TCA_STATS_MAX
 )
 
 // See struct tc_stats in /usr/include/linux/pkt_sched.h
