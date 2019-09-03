@@ -1,11 +1,13 @@
 language: go
 go:
   - 1.x
+env:
+  - GO111MODULE=on
 os:
   - linux
 sudo: required
 before_install:
-  - go get github.com/golang/lint/golint
+  - go get golang.org/x/lint/golint
   - go get honnef.co/go/tools/cmd/staticcheck
   - go get -d ./...
 script:
