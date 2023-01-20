@@ -1,9 +1,11 @@
 package qdisc
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"net"
+	"syscall"
 
 	"github.com/mdlayher/netlink"
 	"github.com/mdlayher/netlink/nlenc"
@@ -293,6 +295,14 @@ func Get() ([]QdiscInfo, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to dial netlink: %v", err)
 	}
+
+	if err := c.SetOption(netlink.GetStrictCheck, true); err != nil {
+		// silently accept ENOPROTOOPT errors when kernel is not > 4.20
+		if !errors.Is(err, syscall.ENOPROTOOPT) {
+			return nil, fmt.Errorf("unexpected error trying to set option NETLINK_GET_STRICT_CHK: %v", err)
+		}
+	}
+
 	defer c.Close()
 
 	return getAndParse(c)
