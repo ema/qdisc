@@ -1,4 +1,4 @@
-qdisc [![Build Status](https://travis-ci.org/ema/qdisc.svg?branch=master)](https://travis-ci.org/ema/qdisc)
+qdisc [![Build Status](https://github.com/ema/qdisc/actions/workflows/makefile.yml/badge.svg)](https://github.com/ema/qdisc/actions/)
 =====
 
 Package `qdisc` allows getting queuing discipline information via netlink,
