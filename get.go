@@ -177,7 +177,7 @@ func getQdiscMsgs(c *netlink.Conn) ([]netlink.Message, error) {
 }
 
 // See https://tools.ietf.org/html/rfc3549#section-3.1.3
-func parseMessage(msg netlink.Message) (QdiscInfo, error) {
+func parseMessage(msg netlink.Message, ifaceNamesByID map[int]string) (QdiscInfo, error) {
 	var m QdiscInfo
 	var s TC_Stats
 	var s2 TC_Stats2
@@ -257,13 +257,23 @@ func parseMessage(msg netlink.Message) (QdiscInfo, error) {
 		}
 	}
 
-	iface, err := net.InterfaceByIndex(int(ifaceIdx))
-
-	if err == nil {
-		m.IfaceName = iface.Name
-	}
+	m.IfaceName = ifaceNamesByID[int(ifaceIdx)]
 
 	return m, err
+}
+
+func getInterfaceNames() (map[int]string, error) {
+	ifas, err := net.Interfaces()
+	if err != nil {
+		return nil, err
+	}
+
+	ifNamesByID := make(map[int]string)
+	for _, ifa := range ifas {
+		ifNamesByID[ifa.Index] = ifa.Name
+	}
+
+	return ifNamesByID, nil
 }
 
 func getAndParse(c *netlink.Conn) ([]QdiscInfo, error) {
@@ -275,8 +285,13 @@ func getAndParse(c *netlink.Conn) ([]QdiscInfo, error) {
 		return nil, err
 	}
 
+	ifNamesByID, err := getInterfaceNames()
+	if err != nil {
+		return nil, err
+	}
+
 	for _, msg := range msgs {
-		m, err := parseMessage(msg)
+		m, err := parseMessage(msg, ifNamesByID)
 
 		if err != nil {
 			return nil, err
